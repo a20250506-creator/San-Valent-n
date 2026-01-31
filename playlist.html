@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Nuestra playlist 💙</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #2b3a67, #0c1024);
+  font-family: 'Georgia', serif;
+  color: #eaf0ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Estrellas */
+.estrella {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: flotar 20s linear infinite;
+}
+@keyframes flotar {
+  from { transform: translateY(100vh); opacity: 0; }
+  to { transform: translateY(-120vh); opacity: 1; }
+}
+
+/* Contenedor */
+.contenedor {
+  background: rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 34px;
+  width: 90%;
+  max-width: 520px;
+  box-shadow: 0 0 35px rgba(140,170,255,0.35);
+  z-index: 2;
+}
+
+/* Lista */
+.lista { display: flex; flex-direction: column; gap: 14px; }
+
+.cancion {
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.12);
+  cursor: pointer;
+  position: relative;
+}
+.cancion.favorita {
+  outline: 2px solid rgba(255,182,193,0.8);
+}
+
+.corazon {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.titulo { font-weight: bold; }
+.frase { font-style: italic; font-size: 14px; }
+
+/* Reproductor */
+audio { width: 100%; margin-top: 12px; }
+
+.nota {
+  font-family: "Comic Sans MS", "Segoe Script", cursive;
+  font-size: 15px;
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* Foto final */
+.foto-final {
+  margin-top: 26px;
+  text-align: center;
+}
+.foto-final img {
+  max-width: 220px;
+  border-radius: 20px;
+  padding: 6px;
+  background: white;
+}
+
+/* Botón */
+.volver {
+  margin-top: 22px;
+  padding: 10px 22px;
+  border-radius: 30px;
+  border: none;
+  background: rgba(180,200,255,0.3);
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+<h2 style="text-align:center;">Nuestra playlist 💙</h2>
+
+<div class="lista">
+
+<div class="cancion" data-src="cancion1.mp3">
+  <div class="titulo">🎵 Perfect – Ed Sheeran</div>
+  <div class="frase">Esta suena a nosotros</div>
+  <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
+</div>
+
+<div class="cancion" data-src="cancion2.mp3">
+  <div class="titulo">🎵 Eres – Café Tacvba</div>
+  <div class="frase">Esta suena a nosotros</div>
+  <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
+</div>
+
+<div class="cancion" data-src="cancion2.mp3">
+  <div class="titulo">🎵 Eres – Café Tacvba</div>
+  <div class="frase">Esta suena a nosotros</div>
+  <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
+</div>
+
+<div class="cancion" data-src="cancion2.mp3">
+  <div class="titulo">🎵 Eres – Café Tacvba</div>
+  <div class="frase">Esta suena a nosotros</div>
+  <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
+</div>
+
+<div class="cancion" data-src="cancion2.mp3">
+  <div class="titulo">🎵 Eres – Café Tacvba</div>
+  <div class="frase">Esta suena a nosotros</div>
+  <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
+</div>
+
+</div>
+
+<audio id="audio" controls></audio>
+
+<div class="nota" id="nota">
+Gracias por escuchar conmigo 🤍
+</div>
+
+<div class="foto-final">
+  <img src="ultima_foto.jpg" alt="Nosotros">
+</div>
+
+<button class="volver" onclick="volver()">Volver al inicio ✨</button>
+
+</div>
+
+<script>
+const audio = document.getElementById("audio");
+const nota = document.getElementById("nota");
+
+document.querySelectorAll(".cancion").forEach(c => {
+  c.onclick = () => {
+    audio.src = c.dataset.src;
+    audio.play();
+    nota.textContent = "Esta suena a nosotros 💫";
+    localStorage.setItem("cancion", audio.src);
+  };
+});
+
+audio.ontimeupdate = () => {
+  localStorage.setItem("tiempo", audio.currentTime);
+};
+
+window.onload = () => {
+  const c = localStorage.getItem("cancion");
+  const t = localStorage.getItem("tiempo");
+  if (c) {
+    audio.src = c;
+    audio.currentTime = t;
+    audio.play();
+  }
+};
+
+function volver() {
+  localStorage.setItem("tiempo", audio.currentTime);
+  window.location.href = "sv_html.html";
+}
+
+function marcarFavorita(e, el) {
+  e.stopPropagation();
+  el.textContent = el.textContent === "🤍" ? "❤️" : "🤍";
+  el.parentElement.classList.toggle("favorita");
+}
+
+/* Estrellas */
+for (let i=0;i<40;i++){
+  const s=document.createElement("div");
+  s.className="estrella";
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDuration=15+Math.random()*15+"s";
+  document.body.appendChild(s);
+}
+</script>
+
+</body>
+</html>

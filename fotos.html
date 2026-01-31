@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuestros Recuerdos 💕</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #1a1a2e, #000);
+      color: white;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #ff9ecd;
+      margin-bottom: 40px;
+    }
+
+    /* ===== GALERÍA PRINCIPAL ===== */
+    .galeria {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .marco {
+      padding: 12px;
+      border-radius: 22px;
+    }
+
+    .tarjeta {
+      width: 220px;
+      height: 220px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .interior {
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+      position: relative;
+    }
+
+    .tarjeta.volteada .interior {
+      transform: rotateY(180deg);
+    }
+
+    .cara {
+      position: absolute;
+      inset: 0;
+      border-radius: 15px;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .cara img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .atras {
+      transform: rotateY(180deg);
+      font-size: 16px;
+      text-align: center;
+      color: #333;
+    }
+
+    .pastel-uno { background: #fdecea; }
+    .pastel-dos { background: #e6f4ff; }
+    .pastel-tres { background: #fff4cc; }
+
+    /* ===== MARCOS ===== */
+    .marco-uno {
+      background: repeating-linear-gradient(
+        45deg,
+        #2ecc71,
+        #2ecc71 10px,
+        #e74c3c 10px,
+        #e74c3c 20px
+      );
+    }
+
+    .marco-dos {
+      background: #cfe9ff;
+      position: relative;
+    }
+
+    .marco-dos::before {
+      content: "❄️ ❄️ ❄️ ❄️";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .marco-tres {
+      background: linear-gradient(135deg, #f7d046, #d4af37);
+      position: relative;
+    }
+
+    .marco-tres::before {
+      content: "🍟 ✨ 🍟 ✨";
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* ===== SOLO ELLA ===== */
+    .solo-ella {
+      margin-top: 80px;
+    }
+
+    .solo-ella h2 {
+      color: #ffd1e8;
+      margin-bottom: 25px;
+      font-weight: normal;
+    }
+
+    .galeria-ella {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .galeria-ella img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 18px;
+      box-shadow: 0 0 20px rgba(255,182,193,0.35);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .galeria-ella img:hover {
+      transform: scale(1.05);
+    }
+
+/* ===== VISOR ===== */
+.visor {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.visor.activo {
+  display: flex;
+}
+
+.visor-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.visor-contenido img {
+  max-width: 85%;
+  max-height: 70vh;
+  border-radius: 20px;
+}
+
+#mensajeFoto {
+  font-size: 18px;
+  font-style: italic;
+  color: #ffdff0;
+  max-width: 80%;
+  text-align: center;
+}
+    /* ===== FRASE FINAL ===== */
+    .frase-final {
+      margin-top: 35px;
+      font-size: 18px;
+      color: #e6cfe6;
+      font-style: italic;
+    }
+
+    /* ===== SECRETO ===== */
+    .secreto-trigger {
+      display: inline-block;
+      margin-top: 15px;
+      font-size: 22px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: transform 0.3s;
+    }
+
+    .secreto-trigger:hover {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+
+    .mensaje-secreto {
+      display: none;
+      margin: 30px auto 0;
+      max-width: 500px;
+      padding: 25px;
+      border-radius: 20px;
+      background: rgba(255,182,193,0.15);
+      color: #ffdff0;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 60px;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: #ff69b4;
+      color: white;
+      cursor: pointer;
+    }
+    .galeria-ella {
+  margin-top: 50px;
+  text-align: center;
+}
+.ella-contenedor {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.miniaturas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.foto img {
+  width: 160px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.35);
+  transition: transform 0.3s;
+}
+
+.foto img:hover {
+  transform: scale(1.05);
+}
+
+.cuadro-frase {
+  background: white;
+  color: #333;
+  padding: 25px 30px;
+  border-radius: 20px;
+  max-width: 260px;
+  font-size: 18px;
+  font-style: italic;
+  box-shadow: 0 0 25px rgba(255,255,255,0.3);
+}
+.miniaturas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.foto img {
+  width: 130px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.foto img:hover {
+  transform: scale(1.08);
+}
+
+/* Visor */
+.visor {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.visor-contenido {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  max-width: 85%;
+  text-align: center;
+}
+
+.visor img {
+  max-width: 100%;
+  max-height: 60vh;
+  border-radius: 10px;
+}
+
+#mensajeFoto {
+  margin-top: 12px;
+  color: #444;
+}
+
+button {
+  margin-top: 10px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.frase-final {
+  margin-top: 45px;
+  font-style: italic;
+  color: #d0caca;
+}
+  </style>
+</head>
+<script>
+function abrirVisor(img, mensaje) {
+  document.getElementById("imagenGrande").src = img.src;
+  document.getElementById("mensajeFoto").textContent = mensaje;
+  document.getElementById("visor").style.display = "flex";
+}
+
+function cerrarVisor() {
+  document.getElementById("visor").style.display = "none";
+}
+</script>
+<body>
+
+<h1>Nuestros recuerdos ✨</h1>
+
+<div class="galeria">
+
+  <div class="marco marco-uno">
+    <div class="tarjeta" onclick="this.classList.toggle('volteada')">
+      <div class="interior">
+        <div class="cara frente"><img src="foto1.jpg"></div>
+        <div class="cara atras pastel-uno"><p>Este día lo guardo en mi corazón 💖</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marco marco-dos">
+    <div class="tarjeta" onclick="this.classList.toggle('volteada')">
+      <div class="interior">
+        <div class="cara frente"><img src="foto2.jpeg"></div>
+        <div class="cara atras pastel-dos"><p>Contigo todo se siente hogar ✨</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marco marco-tres">
+    <div class="tarjeta" onclick="this.classList.toggle('volteada')">
+      <div class="interior">
+        <div class="cara frente"><img src="foto3.png"></div>
+        <div class="cara atras pastel-tres"><p>Siempre te elegiría 🤍</p></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="solo-ella">
+  <h2>Tú ✨</h2>
+
+  <section class="galeria-ella">
+
+  <div class="ella-contenedor">
+
+    <div class="miniaturas">
+
+      <div class="foto">
+        <img src="ella1.png" alt="Ella 1"
+          onclick="abrirVisor(this, 'La dueña de mi corazón 💞')">
+      </div>
+
+      <div class="foto">
+        <img src="ella2.png" alt="Ella 2"
+          onclick="abrirVisor(this, 'Mi razón favorita para sonreír ✨')">
+      </div>
+
+      <div class="foto">
+        <img src="ella3.jpeg" alt="Ella 3"
+          onclick="abrirVisor(this, 'El mundo se detiene cuando sonríes ✨')">
+      </div>
+
+      <div class="foto">
+        <img src="ella4.jpeg" alt="Ella 4"
+          onclick="abrirVisor(this, 'Cada día más enamorado de ti ❤️')">
+      </div>
+
+    </div>
+
+    <div class="cuadro-frase">
+      “Y aun así, ninguna foto te hace justicia” 
+    </div>
+
+  </div>
+
+
+</section>
+
+<!-- VISOR -->
+<div class="visor" id="visor" onclick="cerrarVisor()">
+  <div class="visor-contenido" onclick="event.stopPropagation()">
+    <img id="imagenGrande">
+    <p id="mensajeFoto"></p>
+    <button type="button" onclick="cerrarVisor()">Cerrar</button>
+  </div>
+</div>
+
+  <p class="frase-final">“Y aun así, ninguna foto te hace justicia” </p>
+
+  <span class="secreto-trigger" onclick="activarSecreto()">🐧🌙</span>
+
+  <div class="mensaje-secreto" id="mensajeSecreto">
+    <p>
+      Si encontraste esto…<br><br>
+      es porque eres el amor de mi vida 💕<br><br>
+      Te amo más de lo que imaginas ✨
+    </p>
+  </div>
+</div>
+
+<div class="visor" id="visor" onclick="cerrarVisor()">
+  <div class="contenido-visor" onclick="event.stopPropagation()">
+    <img id="imagenGrande">
+    <p id="textoImagen"></p>
+  </div>
+</div>
+
+<button onclick="window.history.back()">Volver 💖</button>
+
+<script>
+  function verImagen(img, texto) {
+    document.getElementById("imagenGrande").src = img.src;
+    document.getElementById("textoImagen").innerText = texto;
+    document.getElementById("visor").classList.add("activo");
+  }
+
+  function cerrarVisor() {
+    document.getElementById("visor").classList.remove("activo");
+  }
+
+  let clicksSecretos = 0;
+  function activarSecreto() {
+    clicksSecretos++;
+    if (clicksSecretos === 3) {
+      document.getElementById("mensajeSecreto").style.display = "block";
+    }
+  }
+  
+  function abrirVisor(img, texto) {
+    document.getElementById("imagenGrande").src = img.src;
+    document.getElementById("mensajeFoto").innerText = texto;
+    document.getElementById("visor").classList.add("activo");
+  }
+
+  function cerrarVisor() {
+    document.getElementById("visor").classList.remove("activo");
+  }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para Ti ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at top, #171730, #000);
+      color: white;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 40px;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+      animation: fadeIn 2s ease;
+      z-index: 2;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff9ecd;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    button {
+      margin-top: 25px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: #ee57a2;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Corazones */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      color: rgb(248, 163, 177);
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    /* Foto final */
+   .foto-final {
+  position: absolute;
+  bottom: 250px;
+  left: 93px;
+  text-align: left;
+  z-index: 1;
+    }
+    .foto-final img {
+  max-width: 240px;
+  width: 100%;
+  border-radius: 18px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 0 0 2px rgba(255, 182, 193, 0.6),
+    0 10px 30px rgba(255, 105, 180, 0.35);
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal.activo {
+      display: flex;
+    }
+
+    .modal-contenido {
+      text-align: center;
+      max-width: 90%;
+      animation: aparecer 0.8s ease;
+    }
+
+    .modal-contenido img {
+      max-width: 320px;
+      width: 100%;
+      border-radius: 22px;
+      box-shadow: 0 0 35px rgba(255,182,193,0.4);
+    }
+
+    .texto-sorpresa {
+      margin-top: 22px;
+      font-size: 18px;
+      color: #ffdff0;
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 360px;
+      opacity: 0;
+      animation: aparecerTexto 1.2s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes aparecerTexto {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Música -->
+  <audio id="musica" src="cancion.mp3"></audio>
+
+  <!-- Tarjeta -->
+  <div class="card">
+    <h1>Para ti, mi Princesita 💖</h1>
+
+    <p>
+      Feliz San Valentín, mi amor 💕.<br><br>
+
+      Te amo como eres, con cada gesto, cada mirada y cada pedacito de tu esencia
+      que hace que mi corazón te elija todos los días ✨.
+      Gracias por amarme, por cuidarme y por quererme de una forma tan bonita,
+      tan sincera, tan tuya 🤍.<br><br>
+
+      Princesita 👑, tú haces que lo simple sea especial y que mi vida tenga sentido 🌸.<br><br>
+
+      Hoy y siempre, quiero cuidarte, elegirte y amarte… para siempre 💫❤️
+    </p>
+
+    <button onclick="irAPlaylist()">Una vida de sorpresas juntos 💘</button>
+    <button onclick="abrirSorpresa()">La forma más bonita del tiempo</button>
+    <button onclick="irAFotos()">Ver nuestros recuerdos 📸</button>
+  </div>
+
+  <!-- Foto -->
+  <div class="foto-final">
+    <img src="ella5.jpeg" alt="Ella">
+  </div>
+
+  <!-- Modal sorpresa -->
+  <div class="modal" id="modalSorpresa" onclick="cerrarSorpresa()">
+    <div class="modal-contenido" onclick="event.stopPropagation()">
+      <img src="sorpresa.jpeg" alt="Nosotros">
+
+      <p class="texto-sorpresa">
+        No sé qué nos traerá el futuro…<br><br>
+        pero sí sé con quién quiero descubrirlo 🤍<br><br>
+        Si la vida es una sorpresa,<br>
+        yo quiero abrirla siempre contigo 🌙
+      </p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+   
+    function abrirSorpresa() {
+      document.getElementById("modalSorpresa").classList.add("activo");
+    }
+
+    function cerrarSorpresa() {
+      document.getElementById("modalSorpresa").classList.remove("activo");
+    }
+
+    function irAFotos() {
+      window.location.href = "fotos.html";
+    }
+  function irAPlaylist() {
+      window.location.href = "playlist.html";
+    }
+    // Corazones flotantes
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (20 + Math.random() * 20) + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }, 500);
+    window.onload = () => {
+  const audio = document.getElementById("musica");
+  const c = localStorage.getItem("cancion");
+  const t = localStorage.getItem("tiempo");
+
+  if (c && audio) {
+    audio.src = c;
+    audio.currentTime = t;
+    audio.play();
+  }
+};
+  </script>
+
+</body>
+</html>
