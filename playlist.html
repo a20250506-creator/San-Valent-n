@@ -226,7 +226,7 @@ function volver() {
   // Si hay una canción cargada (aunque esté en pausa)
   if (audio.src && audio.src !== "") {
     localStorage.setItem("tiempo", audio.currentTime || 0);
-    window.location.href = "sv_html.html";
+    window.location.href = "index.html";
   } else {
     // No hay ninguna canción seleccionada
     btnVolver.classList.add("latido");
@@ -253,3 +253,4 @@ localStorage.setItem("playlistVista", "true");
 
 </body>
 </html>
+
