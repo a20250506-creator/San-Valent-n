@@ -430,6 +430,7 @@ function cerrarVisor() {
   </div>
 </div>
 
+ 
 
   <span class="secreto-trigger" onclick="activarSecreto()">🐧🌙</span>
 
@@ -452,6 +453,7 @@ function cerrarVisor() {
 <button onclick="window.history.back()">Volver 💖</button>
 
 <script>
+    localStorage.setItem("fotosVistas", "true");
   function verImagen(img, texto) {
     document.getElementById("imagenGrande").src = img.src;
     document.getElementById("textoImagen").innerText = texto;
@@ -483,5 +485,4 @@ function cerrarVisor() {
 </script>
 
 </body>
-
 </html>

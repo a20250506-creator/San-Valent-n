@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para Ti ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at top, #171730, #000);
+      color: white;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 40px;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+      animation: fadeIn 2s ease;
+      z-index: 2;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff9ecd;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    button {
+      margin-top: 25px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background: #ee57a2;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Corazones */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      color: rgb(248, 163, 177);
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    /* Foto final */
+   .foto-final {
+  position: absolute;
+  bottom: 250px;
+  left: 93px;
+  text-align: left;
+  z-index: 1;
+    }
+    .foto-final img {
+  max-width: 240px;
+  width: 100%;
+  border-radius: 18px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 0 0 2px rgba(255, 182, 193, 0.6),
+    0 10px 30px rgba(255, 105, 180, 0.35);
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal.activo {
+      display: flex;
+    }
+
+    .modal-contenido {
+      text-align: center;
+      max-width: 90%;
+      animation: aparecer 0.8s ease;
+    }
+
+    .modal-contenido img {
+      max-width: 320px;
+      width: 100%;
+      border-radius: 22px;
+      box-shadow: 0 0 35px rgba(255,182,193,0.4);
+    }
+
+    .texto-sorpresa {
+      margin-top: 22px;
+      font-size: 18px;
+      color: #ffdff0;
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 360px;
+      opacity: 0;
+      animation: aparecerTexto 1.2s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes aparecerTexto {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* 🌻 Girasol secreto */
+#girasol {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  font-size: 34px;
+  cursor: pointer;
+  opacity: 0.6;
+  z-index: 5;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#girasol:hover {
+  transform: scale(1.15) rotate(-5deg);
+  opacity: 1;
+}
+
+/* Mensaje secreto */
+.mensaje-girasol {
+  display: none;
+  position: fixed;
+  bottom: 70px;
+  left: 20px;
+  background: rgba(0,0,0,0.75);
+  color: #ffdff0;
+  padding: 15px 18px;
+  border-radius: 14px;
+  font-style: italic;
+  max-width: 240px;
+  animation: aparecerTexto 0.6s ease forwards;
+  z-index: 5;
+} 
+#telon {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #7a1f2b, #2b0a10);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: pointer;
+  transition: transform 1.4s ease, opacity 1.4s ease;
+}
+
+#telon.abierto {
+  transform: scaleY(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mensaje-telon {
+  font-size: 38px;
+  color: #ffdff0;
+  text-align: center;
+  max-width: 80%;
+  font-style: italic;
+  line-height: 1.6;
+  white-space: pre-line; /* 👈 CLAVE */
+  animation: aparecer 2s ease;
+}
+
+.hint {
+  margin-top: 18px;
+  font-size: 14px;
+  opacity: 0.7;
+  animation: parpadeo 2s infinite;
+}
+
+@keyframes parpadeo {
+  0%,100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- Música -->
+  <audio id="musica" src="cancion.mp3"></audio>
+
+  <!-- Tarjeta -->
+  <div class="card">
+    <h1>Para ti, mi Princesita 💖</h1>
+
+    <p>
+      Feliz San Valentín, mi amor 💕.<br><br>
+
+      Te amo como eres, con cada gesto, cada mirada y cada pedacito de tu esencia
+      que hace que mi corazón te elija todos los días ✨.
+      Gracias por amarme, por cuidarme y por quererme de una forma tan bonita,
+      tan sincera, tan tuya 🤍.<br><br>
+
+      Princesita 👑, tú haces que lo simple sea especial y que mi vida tenga sentido 🌸.<br><br>
+
+      Hoy y siempre, quiero cuidarte, elegirte y amarte… para siempre 💫❤️
+    </p>
+
+    <button onclick="irAPlaylist()">Una vida de sorpresas juntos 💘</button>
+    <button onclick="abrirSorpresa()">La forma más bonita del tiempo</button>
+    <button onclick="irAFotos()">Ver nuestros recuerdos 📸</button>
+  </div>
+<button id="botonFinal" onclick="irAFinal()" style="display:none;">
+  El último recuerdo 📜💫
+</button>
+  <!-- Foto -->
+  <div class="foto-final">
+    <img src="ella5.jpeg" alt="Ella">
+  </div>
+
+  <!-- Modal sorpresa -->
+  <div class="modal" id="modalSorpresa" onclick="cerrarSorpresa()">
+    <div class="modal-contenido" onclick="event.stopPropagation()">
+      <img src="sorpresa.jpeg" alt="Nosotros">
+
+      <p class="texto-sorpresa">
+        No sé qué nos traerá el futuro…<br><br>
+        pero sí sé con quién quiero descubrirlo 🤍<br><br>
+        Si la vida es una sorpresa,<br>
+        yo quiero abrirla siempre contigo 🌙
+      </p>
+    </div>
+  </div>
+<!-- Girasol secreto -->
+<div id="girasol" title="Siempre miro hacia ti 🌻">🌻</div>
+
+<div id="mensajeGirasol" class="mensaje-girasol">
+  Gracias por ser mi luz 🤍<br>
+  Te amo, siempre.
+</div>
+
+<audio id="audioGirasol" src="nota.mp3"></audio>
+  <!-- Scripts -->
+  <script>
+   
+    function abrirSorpresa() {
+      document.getElementById("modalSorpresa").classList.add("activo");
+    }
+
+    function cerrarSorpresa() {
+      document.getElementById("modalSorpresa").classList.remove("activo");
+    }
+
+    function irAFotos() {
+      window.location.href = "fotos.html";
+    }
+  function irAPlaylist() {
+      window.location.href = "playlist.html";
+    }
+    // Corazones flotantes
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (20 + Math.random() * 20) + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }, 500);
+    window.onload = () => {
+  const audio = document.getElementById("musica");
+  const c = localStorage.getItem("cancion");
+  const t = localStorage.getItem("tiempo");
+
+  if (c && audio) {
+    audio.src = c;
+    audio.currentTime = t;
+    audio.play();
+  }
+};
+// 🌻 Girasol secreto
+const girasol = document.getElementById("girasol");
+const mensajeGirasol = document.getElementById("mensajeGirasol");
+const audioGirasol = document.getElementById("audioGirasol");
+
+girasol.addEventListener("click", () => {
+  // Mostrar / ocultar mensaje
+  const visible = mensajeGirasol.style.display === "block";
+  mensajeGirasol.style.display = visible ? "none" : "block";
+
+  // Reproducir audio solo al abrir
+  if (!visible && audioGirasol) {
+    audioGirasol.currentTime = 0;
+    audioGirasol.play();
+  } 
+});
+function mensajeSegunHora() {
+  const h = new Date().getHours();
+
+  if (h >= 5 && h < 12) {
+    return "Buenos días, princesita ☀️\nHoy es un día hermoso porque existes";
+  } else if (h >= 12 && h < 18) {
+    return "Buenas tardes 🤍\nPensarte acompaña todo mi día";
+  } else if (h >= 18 && h < 22) {
+    return "Buenas noches ✨\nEl día se vuelve suave cuando estás";
+  } else {
+    return "Es tarde 🌙\npero mi corazón sigue despierto contigo";
+  }
+}
+function abrirSorpresa() {
+  document.getElementById("modalSorpresa").classList.add("activo");
+  localStorage.setItem("sorpresaVista", "true");
+}
+
+
+function abrirTelon() {
+  document.getElementById("telon").classList.add("abierto");
+}
+window.addEventListener("DOMContentLoaded", () => {
+  const mensajeTelon = document.getElementById("mensajeTelon");
+  if (mensajeTelon) {
+    mensajeTelon.textContent = mensajeSegunHora();
+  }
+});
+
+window.onload = () => {
+  const playlist = localStorage.getItem("playlistVista");
+  const fotos = localStorage.getItem("fotosVistas");
+  const sorpresa = localStorage.getItem("sorpresaVista");
+
+  if (playlist && fotos && sorpresa) {
+    document.getElementById("botonFinal").style.display = "block";
+  }
+};
+
+function irAFinal() {
+  window.location.href = "final.html";
+}
+  </script>
+<div id="telon" onclick="abrirTelon()">
+  <div class="mensaje-telon" id="mensajeTelon"></div>
+  <div class="hint">✨ toca para comenzar ✨</div>
+</div>
+
+</body>
+</html>

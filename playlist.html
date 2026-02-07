@@ -90,15 +90,36 @@ audio { width: 100%; margin-top: 12px; }
   background: white;
 }
 
-/* Botón */
-.volver {
-  margin-top: 22px;
-  padding: 10px 22px;
-  border-radius: 30px;
+/* Botón volver */
+.btn-volver {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 22px;
+  font-size: 15px;
   border: none;
-  background: rgba(180,200,255,0.3);
+  border-radius: 30px;
+  background: #ee57a2;
   color: white;
   cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn-volver:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(255, 105, 180, 0.6);
+}
+
+/* Latido */
+@keyframes latido {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.latido {
+  animation: latido 0.6s;
 }
 </style>
 </head>
@@ -112,32 +133,32 @@ audio { width: 100%; margin-top: 12px; }
 <div class="lista">
 
 <div class="cancion" data-src="cancion1.mp3">
-  <div class="titulo">🎵 Perfect – Ed Sheeran</div>
-  <div class="frase">Esta suena a nosotros</div>
+  <div class="titulo">🎵 Me voy Enamorando – Chino y Nacho</div>
+  <div class="frase">Aquí empezó a latir lo nuestro</div>
   <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
 </div>
 
 <div class="cancion" data-src="cancion2.mp3">
-  <div class="titulo">🎵 Eres – Café Tacvba</div>
-  <div class="frase">Esta suena a nosotros</div>
+  <div class="titulo">🎵 The Fate of Ophelia – Taylor Swift</div>
+  <div class="frase">Donde el amor se vuelve eterno</div>
   <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
 </div>
 
-<div class="cancion" data-src="cancion2.mp3">
-  <div class="titulo">🎵 Eres – Café Tacvba</div>
-  <div class="frase">Esta suena a nosotros</div>
+<div class="cancion" data-src="cancion3.mp3">
+  <div class="titulo">🎵 Es que yo te Quiero a Ti – Kevin Kaarl</div>
+  <div class="frase">Decirte te quiero se queda corto</div>
   <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
 </div>
 
-<div class="cancion" data-src="cancion2.mp3">
-  <div class="titulo">🎵 Eres – Café Tacvba</div>
-  <div class="frase">Esta suena a nosotros</div>
+<div class="cancion" data-src="cancion4.mp3">
+  <div class="titulo">🎵 Aprender a Quererte – Morat</div>
+  <div class="frase">Amarte fue un aprendizaje hermoso</div>
   <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
 </div>
 
-<div class="cancion" data-src="cancion2.mp3">
-  <div class="titulo">🎵 Eres – Café Tacvba</div>
-  <div class="frase">Esta suena a nosotros</div>
+<div class="cancion" data-src="cancion5.mp3">
+  <div class="titulo">🎵 Someday – Zombies</div>
+  <div class="frase">Nuestro amor mirando el mañana</div>
   <div class="corazon" onclick="marcarFavorita(event,this)">🤍</div>
 </div>
 
@@ -150,24 +171,40 @@ Gracias por escuchar conmigo 🤍
 </div>
 
 <div class="foto-final">
-  <img src="ultima_foto.jpg" alt="Nosotros">
+  <img src="foto4.png" alt="Nosotros">
 </div>
 
-<button class="volver" onclick="volver()">Volver al inicio ✨</button>
+<button class="btn-volver" onclick="volver()">Volver al inicio ✨</button>
 
 </div>
 
 <script>
 const audio = document.getElementById("audio");
 const nota = document.getElementById("nota");
+const btnVolver = document.querySelector(".btn-volver");
+
+let musicaActiva = false;
 
 document.querySelectorAll(".cancion").forEach(c => {
   c.onclick = () => {
     audio.src = c.dataset.src;
     audio.play();
-    nota.textContent = "Esta suena a nosotros 💫";
+    musicaActiva = true;
+    nota.textContent = c.querySelector(".frase").textContent + " 💫";
     localStorage.setItem("cancion", audio.src);
   };
+});
+
+audio.addEventListener("ended", () => {
+  musicaActiva = false;
+});
+
+audio.addEventListener("pause", () => {
+  musicaActiva = false;
+});
+
+audio.addEventListener("play", () => {
+  musicaActiva = true;
 });
 
 audio.ontimeupdate = () => {
@@ -181,12 +218,20 @@ window.onload = () => {
     audio.src = c;
     audio.currentTime = t;
     audio.play();
+    musicaActiva = true;
   }
 };
 
 function volver() {
-  localStorage.setItem("tiempo", audio.currentTime);
-  window.location.href = "index.html";
+  // Si hay una canción cargada (aunque esté en pausa)
+  if (audio.src && audio.src !== "") {
+    localStorage.setItem("tiempo", audio.currentTime || 0);
+    window.location.href = "sv_html.html";
+  } else {
+    // No hay ninguna canción seleccionada
+    btnVolver.classList.add("latido");
+    setTimeout(() => btnVolver.classList.remove("latido"), 600);
+  }
 }
 
 function marcarFavorita(e, el) {
@@ -196,15 +241,15 @@ function marcarFavorita(e, el) {
 }
 
 /* Estrellas */
-for (let i=0;i<40;i++){
-  const s=document.createElement("div");
-  s.className="estrella";
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration=15+Math.random()*15+"s";
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement("div");
+  s.className = "estrella";
+  s.style.left = Math.random() * 100 + "vw";
+  s.style.animationDuration = 15 + Math.random() * 15 + "s";
   document.body.appendChild(s);
 }
+localStorage.setItem("playlistVista", "true");
 </script>
 
 </body>
 </html>
-
