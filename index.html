@@ -218,6 +218,27 @@
   0%,100% { opacity: 0.3; }
   50% { opacity: 0.8; }
 }
+/* 🔐 Botón Recuerdos */
+.boton-recuerdos {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255, 158, 205, 0.9);
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.boton-recuerdos:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(255, 182, 193, 0.6);
+}
   </style>
 </head>
 
@@ -247,8 +268,12 @@
     <button onclick="abrirSorpresa()">La forma más bonita del tiempo</button>
     <button onclick="irAFotos()">Ver nuestros recuerdos 📸</button>
   </div>
-<button id="botonFinal" onclick="irAFinal()" style="display:none;">
-  El último recuerdo 📜💫
+<button id="botonRecuerdos" class="boton-recuerdos" onclick="irARecuerdos()" style="display:none;">
+  Recuerdos Privados 🔐
+</button>
+</button>
+<button class="boton-recuerdos" onclick="irARecuerdos()">
+  Recuerdos Privados 🔐
 </button>
   <!-- Foto -->
   <div class="foto-final">
@@ -258,7 +283,7 @@
   <!-- Modal sorpresa -->
   <div class="modal" id="modalSorpresa" onclick="cerrarSorpresa()">
     <div class="modal-contenido" onclick="event.stopPropagation()">
-      <img src="Sorpresa.jpeg" alt="Nosotros">
+      <img src="sorpresa.jpeg" alt="Nosotros">
 
       <p class="texto-sorpresa">
         No sé qué nos traerá el futuro…<br><br>
@@ -287,7 +312,9 @@
     function cerrarSorpresa() {
       document.getElementById("modalSorpresa").classList.remove("activo");
     }
-
+function irARecuerdos() {
+  window.location.href = "recuerdos.html";
+}
     function irAFotos() {
       window.location.href = "fotos.html";
     }
@@ -353,6 +380,7 @@ function abrirSorpresa() {
 
 function abrirTelon() {
   document.getElementById("telon").classList.add("abierto");
+  document.getElementById("botonRecuerdos").style.display = "block";
 }
 window.addEventListener("DOMContentLoaded", () => {
   const mensajeTelon = document.getElementById("mensajeTelon");
@@ -373,6 +401,11 @@ window.onload = () => {
 
 function irAFinal() {
   window.location.href = "final.html";
+  
+}
+function cerrarHistoria() {
+  localStorage.clear();
+  window.location.href = "index.html";
 }
   </script>
 <div id="telon" onclick="abrirTelon()">
@@ -382,4 +415,3 @@ function irAFinal() {
 
 </body>
 </html>
-
