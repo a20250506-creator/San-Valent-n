@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Recuerdos Privados 🔐</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Georgia', serif;
+  color: white;
+  overflow-x: hidden;
+  position: relative;
+  background: linear-gradient(
+  to bottom,
+  #2c3e75 0%,
+  #1b2a5a 35%,
+  #0f1c3f 60%,
+  #060b1f 100%
+)};
+.estrella-fugaz {
+  position: fixed;
+  top: 15%;
+  left: -300px;
+  width: 300px;
+  height: 3px;
+  background: linear-gradient(to left, white, rgba(255,255,255,0.3), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(35deg);
+  animation: fugaz 12s infinite;
+  z-index: 5;
+}
+
+@keyframes fugaz {
+  0% {
+    transform: translateX(0) translateY(0) rotate(35deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(1600px) translateY(600px) rotate(35deg);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/*.siluetas {
+  position: fixed;
+  bottom: 150px;
+  left: 20%; /* 👈 más hacia la izquierda 
+  width: 200px;
+  height: 120px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.persona {
+  position: absolute;
+  bottom: 0;
+  width: 55px;
+  height: 95px;
+  background: #000;
+  border-radius: 30px 30px 15px 15px;
+}
+
+.persona.izq {
+  left: 55px;
+  transform: rotate(-6deg);
+  z-index: 2;
+}
+
+.persona.der {
+  right: 55px;
+  transform: rotate(6deg);
+  z-index: 1;
+}
+.persona.der::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 12px;
+  background: #000;
+  top: 40px;
+  left: -30px;
+  border-radius: 10px;
+  transform: rotate(-20deg);
+}
+/* cabezas */
+/*.persona::before {
+  content: "";
+  position: absolute;
+  top: -28px;
+  left: 12px;
+  width: 32px;
+  height: 32px;
+  background: #000;
+  border-radius: 50%;
+}*/
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 80% 40%, white, transparent),
+    radial-gradient(1.5px 1.5px at 60% 70%, white, transparent),
+    radial-gradient(2px 2px at 30% 80%, white, transparent),
+    radial-gradient(1px 1px at 75% 15%, white, transparent),
+    radial-gradient(1.5px 1.5px at 45% 50%, white, transparent),
+    radial-gradient(2px 2px at 10% 20%, white, transparent),
+  radial-gradient(1.5px 1.5px at 25% 60%, white, transparent),
+  radial-gradient(2px 2px at 80% 40%, white, transparent),
+  radial-gradient(1px 1px at 70% 80%, white, transparent),
+  radial-gradient(1.5px 1.5px at 50% 30%, white, transparent),
+  radial-gradient(2px 2px at 30% 75%, white, transparent),
+  radial-gradient(1px 1px at 60% 50%, white, transparent),
+  radial-gradient(1.5px 1.5px at 85% 15%, white, transparent);
+  animation: parpadeo 4s infinite alternate;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+@keyframes parpadeo {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+@keyframes estrellasMover {
+  from { transform: translateY(0); }
+  to { transform: translateY(-300px); }
+}
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 260px;
+  background: #02040d;
+  border-top-left-radius: 50% 40%;
+  border-top-right-radius: 50% 40%;
+  box-shadow: inset 0 40px 80px rgba(0,0,0,0.9);
+  z-index: 3;
+}
+.luz-atardecer {
+  position: fixed;
+  bottom: 140px;
+  left: 20%;
+  width: 300px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255, 154, 60, 0.6) 0%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+}
+.fondo-remolino {
+  position: fixed;
+  top: -200px;
+  left: -200px;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle at center,
+    rgba(123, 92, 255, 0.25) 0%,
+    rgba(255, 79, 163, 0.15) 30%,
+    transparent 70%);
+  border-radius: 50%;
+  animation: girarRemolino 60s linear infinite;
+  pointer-events: none;
+  z-index: -2;
+}
+
+@keyframes girarRemolino {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+/* LOGIN */
+
+.login-box {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 4;
+  align-items: center;
+}
+
+.login-card {
+  background: rgba(255,255,255,0.08);
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255,105,180,0.3);
+   z-index: 4;
+  backdrop-filter: blur(10px);
+}
+
+input[type="password"] {
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  margin-top: 15px;
+  text-align: center;
+  width: 220px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border-radius: 30px;
+  border: none;
+  background: #ee57a2;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 15px rgba(255,182,193,0.5);
+}
+
+#error {
+  margin-top: 10px;
+  color: #ff9ecd;
+}
+
+/* CONTENIDO */
+
+#contenido {
+  display: none;
+  padding: 40px;
+  text-align: center;
+}
+
+h1 {
+  color: #ff9ecd;
+}
+.boton-musica {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #ff4fa3, #7b5cff);
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+  transition: transform 0.3s ease;
+
+  display: none; /* 👈 importante */
+}
+
+
+.boton-musica:hover {
+  transform: scale(1.1) rotate(-8deg);
+}
+
+.panel-musica {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.panel-contenido {
+  background: rgba(255,255,255,0.08);
+  padding: 30px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(255,105,180,0.3);
+}
+/* PANEL SUBIDA */
+
+
+input[type="file"] {
+  margin-top: 15px;
+}
+
+textarea {
+  width: 90%;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+  resize: none;
+}
+
+/* GALERÍA */
+
+#galeria {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.item {
+  perspective: 1200px;
+}
+
+.polaroid {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4; /* proporción tipo foto vertical */
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+}
+
+.polaroid.girada {
+  transform: rotateY(180deg);
+}
+
+.cara {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+/* PARTE FRONTAL (foto) */
+.frente {
+  background: white;
+  padding: 15px;
+  padding-bottom: 70px; /* 👈 este es el rectángulo */
+  box-shadow: 0 25px 50px rgba(0,0,0,0.75);
+  transform: rotate(-2deg);
+  display: flex;
+  flex-direction: column;
+}
+
+.frente img,
+.frente audio {
+  width: 100%;
+  border-radius: 4px;
+  flex-grow: 1;
+  object-fit: cover;
+}
+/* PARTE TRASERA (mensaje) */
+.dorso {
+  background: white;
+  color: #222;
+  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: rotateY(180deg);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.75);
+  font-style: italic;
+}
+body.modo-galeria::after {
+  display: none;
+}
+
+body.modo-galeria .siluetas {
+  display: none;
+}
+
+body.modo-galeria .luz-atardecer {
+  display: none;
+}
+.mensaje {
+  margin-top: 12px;
+  font-style: italic;
+  color: #ffdff0;
+}
+.file-label {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 25px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.file-label:hover {
+  transform: scale(1.05);
+}
+
+input[type="file"] {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+  <div class="luz-atardecer"></div>
+<div class="estrella-fugaz"></div>
+<div class="siluetas">
+  <div class="persona izq"></div>
+  <div class="persona der"></div>
+</div>
+<!-- LOGIN -->
+<div class="login-box" id="login">
+  <div class="login-card">
+    <h2>Solo para nosotros 🤍</h2>
+    <input type="password" id="password" placeholder="Contraseña">
+    <br>
+    <button id="btnEntrar">Entrar</button>
+    <p id="error"></p>
+  </div>
+</div>
+
+<!-- CONTENIDO -->
+<div id="contenido">
+
+  <h1>Nuestros Recuerdos ✨</h1>
+
+  
+
+  <select id="selectorCancion">
+    <option value="">Sin canción</option>
+  </select>
+
+  <div class="subida-box">
+    <p>Guarda un nuevo recuerdo 🌙</p>
+    <label for="archivo" class="file-label">Elegir Recuerdo</label>
+    <input type="file" id="archivo" accept="image/*,audio/*">
+    <br>
+    <textarea id="mensaje" rows="3" placeholder="Escribe algo especial..."></textarea>
+    <br>
+    <button onclick="subir()">Guardar Recuerdo</button>
+  </div>
+
+  <div id="galeria"></div>
+
+</div>
+<button id="btnMusica" class="boton-musica">🎵</button>
+<div id="panelMusica" class="panel-musica">
+  <div class="panel-contenido">
+    <h3>Subir canción</h3>
+
+    <label for="cancionArchivo" class="file-label">Elegir canción</label>
+    <input type="file" id="cancionArchivo" accept="audio/*">
+
+    <input type="text" id="nombreCancion" placeholder="Nombre de la canción">
+
+    <button onclick="subirCancion()">Guardar Canción</button>*/
+  </div>
+</div>
+<div class="fondo-remolino"></div>
+<div class="fondo-remolino" style="top:-100px; left:60%; width:500px; height:500px; animation-duration: 90s;"></div>
+<script type="module">
+  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBBGVfy5OT53AF9Eo089qVpOHTu0Bnl1MI",
+  authDomain: "recuerdos-privados.firebaseapp.com",
+  projectId: "recuerdos-privados",
+  storageBucket: "recuerdos-privados.firebasestorage.app",
+  messagingSenderId: "1001001145375",
+  appId: "1:1001001145375:web:132056de15b98b6d3b712a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.subir = async function() {
+
+  const boton = document.querySelector("button[onclick='subir()']");
+  boton.disabled = true;
+  boton.textContent = "Guardando...";
+
+  const archivo = document.getElementById("archivo").files[0];
+  const mensaje = document.getElementById("mensaje").value;
+  const idCancion = document.getElementById("selectorCancion").value;
+
+  if (!archivo) {
+    boton.disabled = false;
+    boton.textContent = "Guardar Recuerdo";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = async function(event) {
+    const base64 = event.target.result;
+
+    await addDoc(collection(db, "recuerdos"), {
+      mensaje: mensaje,
+      archivo: base64,
+      tipo: archivo.type,
+      idCancion: idCancion || null,
+      fecha: new Date()
+    });
+
+    await cargarRecuerdos();
+
+    document.getElementById("archivo").value = "";
+    document.getElementById("mensaje").value = "";
+
+    boton.disabled = false;
+    boton.textContent = "Guardar Recuerdo";
+  };
+
+  reader.readAsDataURL(archivo);
+};
+async function cargarRecuerdos() {
+  const galeria = document.getElementById("galeria");
+  galeria.innerHTML = "";
+
+  const querySnapshot = await getDocs(collection(db, "recuerdos"));
+
+  for (const documento of querySnapshot.docs) {
+
+    const data = documento.data();
+
+    const contenedor = document.createElement("div");
+    contenedor.classList.add("item");
+
+    const polaroid = document.createElement("div");
+    polaroid.classList.add("polaroid");
+
+    polaroid.addEventListener("click", () => {
+      polaroid.classList.toggle("girada");
+    });
+
+    const frente = document.createElement("div");
+    frente.classList.add("cara", "frente");
+
+    if (data.tipo.startsWith("image")) {
+      const img = document.createElement("img");
+      img.src = data.archivo;
+      frente.appendChild(img);
+    } else if (data.tipo.startsWith("audio")) {
+      const audio = document.createElement("audio");
+      audio.controls = true;
+      audio.src = data.archivo;
+      frente.appendChild(audio);
+    }
+
+    const dorso = document.createElement("div");
+dorso.classList.add("cara", "dorso");
+
+const textoMensaje = document.createElement("div");
+textoMensaje.style.marginBottom = "15px";
+textoMensaje.textContent = data.mensaje;
+
+const botonEditar = document.createElement("button");
+botonEditar.textContent = "✏️ Editar";
+botonEditar.style.marginTop = "10px";
+
+botonEditar.addEventListener("click", async (e) => {
+  e.stopPropagation();
+
+  const nuevoMensaje = prompt("Editar mensaje:", data.mensaje);
+
+  if (nuevoMensaje !== null && nuevoMensaje.trim() !== "") {
+    await updateDoc(doc(db, "recuerdos", documento.id), {
+      mensaje: nuevoMensaje
+    });
+
+    cargarRecuerdos();
+  }
+});
+
+dorso.appendChild(textoMensaje);
+dorso.appendChild(botonEditar);
+
+    if (data.idCancion) {
+
+      const docCancion = await getDoc(doc(db, "canciones", data.idCancion));
+
+      if (docCancion.exists()) {
+        const dataCancion = docCancion.data();
+
+        const botonPlay = document.createElement("button");
+        botonPlay.textContent = "▶️";
+        botonPlay.style.marginTop = "15px";
+
+        const audio = new Audio(dataCancion.archivo);
+
+        botonPlay.addEventListener("click", (e) => {
+          e.stopPropagation();
+          audio.play();
+        });
+
+        dorso.appendChild(botonPlay);
+      }
+    }
+
+    polaroid.appendChild(frente);
+    polaroid.appendChild(dorso);
+    contenedor.appendChild(polaroid);
+    galeria.appendChild(contenedor);
+  }
+}
+window.subirCancion = async function() {
+console.log("Intentando subir canción...");
+  const archivo = document.getElementById("cancionArchivo").files[0];
+  const nombre = document.getElementById("nombreCancion").value;
+
+  if (!archivo || !nombre) {
+  console.log("Falta archivo o nombre");
+  return;
+}
+  const reader = new FileReader();
+
+  reader.onload = async function(event) {
+    const base64 = event.target.result;
+
+    await addDoc(collection(db, "canciones"), {
+      nombre: nombre,
+      archivo: base64,
+      fecha: new Date()
+    });
+
+    document.getElementById("cancionArchivo").value = "";
+    document.getElementById("nombreCancion").value = "";
+const idCancion = document.getElementById("selectorCancion").value;
+    cargarCanciones();
+  };
+
+  reader.readAsDataURL(archivo);
+};
+async function cargarCanciones() {
+  const selector = document.getElementById("selectorCancion");
+  selector.innerHTML = '<option value="">Sin canción</option>';
+
+  const querySnapshot = await getDocs(collection(db, "canciones"));
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const option = document.createElement("option");
+    option.value = doc.id;
+    option.textContent = data.nombre;
+    selector.appendChild(option);
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const botonEntrar = document.getElementById("btnEntrar");
+
+  botonEntrar.addEventListener("click", () => {
+    const CONTRASENA = "pingu2109";
+    const input = document.getElementById("password").value.trim();
+
+    if (input === CONTRASENA) {
+  document.getElementById("login").style.display = "none";
+  document.getElementById("contenido").style.display = "block";
+  document.getElementById("btnMusica").style.display = "block";
+
+  document.body.classList.add("modo-galeria"); // 👈 aquí
+
+  
+  cargarRecuerdos();
+  cargarCanciones();
+
+    } else {
+      document.getElementById("error").textContent = "Contraseña incorrecta 🤍";
+      document.getElementById("password").value = "";
+    }
+  });
+});
+const btnMusica = document.getElementById("btnMusica");
+const panelMusica = document.getElementById("panelMusica");
+
+btnMusica.addEventListener("click", () => {
+  panelMusica.style.display = "flex";
+});
+
+panelMusica.addEventListener("click", (e) => {
+  if (e.target === panelMusica) {
+    panelMusica.style.display = "none";
+  }
+});
+</script>
